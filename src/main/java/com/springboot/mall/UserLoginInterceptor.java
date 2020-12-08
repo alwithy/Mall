@@ -1,4 +1,4 @@
-package com.springboot.mall.vo;
+package com.springboot.mall;
 
 import com.springboot.mall.exception.UserLoginException;
 import com.springboot.mall.pojo.User;

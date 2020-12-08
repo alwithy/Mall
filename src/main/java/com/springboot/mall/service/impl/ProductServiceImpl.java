@@ -3,9 +3,11 @@ package com.springboot.mall.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.springboot.mall.dao.ProductMapper;
+import com.springboot.mall.enums.ResponseEnum;
 import com.springboot.mall.pojo.Product;
 import com.springboot.mall.service.ICategoryService;
 import com.springboot.mall.service.IProductService;
+import com.springboot.mall.vo.ProductDetailVo;
 import com.springboot.mall.vo.ProductVo;
 import com.springboot.mall.vo.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.springboot.mall.enums.ProductStatusEnum.DELETE;
+import static com.springboot.mall.enums.ProductStatusEnum.OFF_SALE;
 
 @Service
 @Slf4j
@@ -52,5 +57,18 @@ public class ProductServiceImpl implements IProductService {
         PageInfo pageInfo = new PageInfo(productList);
         pageInfo.setList(productVoList);
         return ResponseVo.success(pageInfo);
+    }
+
+    @Override
+    public ResponseVo<ProductDetailVo> detail(Integer productId) {
+        Product product = productMapper.selectByPrimaryKey(productId);
+
+        if (product.getStatus().equals(OFF_SALE.getCode()) || product.getStatus().equals(DELETE.getCode())) {
+            return ResponseVo.error(ResponseEnum.PRODUCT_OFF_SALE_OR_DELETE);
+        }
+        ProductDetailVo productDetailVo = new ProductDetailVo();
+        BeanUtils.copyProperties(product, productDetailVo);
+        product.setStock(product.getStock() > 100 ? 100 : product.getStock());
+        return ResponseVo.success(productDetailVo);
     }
 }
