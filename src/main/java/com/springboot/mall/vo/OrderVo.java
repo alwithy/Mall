@@ -1,19 +1,16 @@
-package com.springboot.mall.pojo;
+package com.springboot.mall.vo;
 
+import com.springboot.mall.pojo.Shipping;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
-public class Order {
-    private Integer id;
+public class OrderVo {
 
     private Long orderNo;
-
-    private Integer userId;
-
-    private Integer shippingId;
 
     private BigDecimal payment;
 
@@ -33,5 +30,9 @@ public class Order {
 
     private Date createTime;
 
-    private Date updateTime;
+    private List<OrderItemVo> orderItemVoList;
+
+    private Integer shippingId;
+
+    private Shipping shippingVo;
 }

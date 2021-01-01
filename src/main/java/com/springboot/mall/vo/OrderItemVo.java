@@ -1,4 +1,4 @@
-package com.springboot.mall.pojo;
+package com.springboot.mall.vo;
 
 import lombok.Data;
 
@@ -6,10 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-public class OrderItem {
-    private Integer id;
-
-    private Integer userId;
+public class OrderItemVo {
 
     private Long orderNo;
 

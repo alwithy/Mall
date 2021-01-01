@@ -2,8 +2,11 @@ package com.springboot.mall.service;
 
 import com.springboot.mall.form.CartAddForm;
 import com.springboot.mall.form.CartUpdateForm;
+import com.springboot.mall.pojo.Cart;
 import com.springboot.mall.vo.CartVo;
 import com.springboot.mall.vo.ResponseVo;
+
+import java.util.List;
 
 public interface ICartService {
 
@@ -20,5 +23,7 @@ public interface ICartService {
     ResponseVo<CartVo> unSelectAll(Integer uid);
 
     ResponseVo<Integer> sum(Integer uid);
+
+    List<Cart> listForCart(Integer uid);
 
 }

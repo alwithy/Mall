@@ -25,14 +25,16 @@ public class ICartServiceTest extends MallApplicationTests {
         CartAddForm form = new CartAddForm();
         form.setProductId(29);
         form.setSelected(true);
-        ResponseVo<CartVo> responseVo = cartService.add(1, form);
+        ResponseVo<CartVo> responseVo = cartService.add(2, form);
         log.info("list={}", gson.toJson(responseVo));
+        Assert.assertEquals(ResponseEnum.SUCCESS.getCode(), responseVo.getStatus());
     }
 
     @Test
     public void list() {
         ResponseVo<CartVo> list = cartService.list(1);
         log.info("list={}", gson.toJson(list));
+        Assert.assertEquals(ResponseEnum.SUCCESS.getCode(), list.getStatus());
     }
 
     @Test
@@ -42,6 +44,7 @@ public class ICartServiceTest extends MallApplicationTests {
         form.setSelected(false);
         ResponseVo<CartVo> responseVo = cartService.update(1, 26, form);
         log.info("list={}", gson.toJson(responseVo));
+        Assert.assertEquals(ResponseEnum.SUCCESS.getCode(), responseVo.getStatus());
     }
 
     @Test
