@@ -73,6 +73,9 @@ public class CartServiceImpl implements ICartService {
             cart = gson.fromJson(value, Cart.class);
             cart.setQuantity(cart.getQuantity() + quantity);
         }
+
+        //设置商品的选中状态
+        cart.setProductSelected(form.getSelected());
         opsForHash.put(redisKey,
                 String.valueOf(product.getId()),
                 gson.toJson(cart));

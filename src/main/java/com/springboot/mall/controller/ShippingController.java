@@ -43,8 +43,7 @@ public class ShippingController {
     @GetMapping("/shippings")
     public ResponseVo list(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
                            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-                             @Valid @RequestBody ShippingForm form,
-                             HttpSession session) {
+                           HttpSession session) {
         User user = (User) session.getAttribute(CURRENT_USER);
         return shippingService.list(user.getId(), pageNum, pageSize);
     }

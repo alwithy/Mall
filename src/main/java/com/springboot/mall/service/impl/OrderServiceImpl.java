@@ -199,16 +199,35 @@ public class OrderServiceImpl implements IOrderService {
         return ResponseVo.success();
     }
 
+    @Override
+    public void paid(Long orderNo) {
+        Order order = orderMapper.selectByOrderNo(orderNo);
+        if (order == null) {
+            throw new  RuntimeException(ResponseEnum.ORDER_NOT_EXIST.getDesc() + "订单id：" + orderNo);
+        }
+        //只有未付款订单可以变成已付款
+        if (!order.getStatus().equals(OrderStatusEnum.NO_PAY.getCode())) {
+            throw new  RuntimeException(ResponseEnum.ORDER_STATUS_ERROR.getDesc() + "订单id：" + orderNo);
+        }
+
+        order.setStatus(OrderStatusEnum.PAID.getCode());
+        order.setPaymentTime(new Date());
+        int row = orderMapper.updateByPrimaryKeySelective(order);
+        if (row <= 0) {
+            throw new  RuntimeException("将订单更新为已支付状态失败，订单id：" + orderNo);
+        }
+    }
+
     private OrderVo buildOrderVo(Order order, List<OrderItem> orderItemList, Shipping shipping) {
         OrderVo orderVo = new OrderVo();
         BeanUtils.copyProperties(order, orderVo);
 
-        List<OrderItemVo> orderItemVoList = orderItemList.stream().map(e -> {
+        List<OrderItemVo> OrderItemVoList = orderItemList.stream().map(e -> {
             OrderItemVo orderItemVo = new OrderItemVo();
             BeanUtils.copyProperties(e, orderItemVo);
             return orderItemVo;
         }).collect(Collectors.toList());
-        orderVo.setOrderItemVoList(orderItemVoList);
+        orderVo.setOrderItemVoList(OrderItemVoList);
 
         if (shipping != null) {
             orderVo.setShippingId(shipping.getId());

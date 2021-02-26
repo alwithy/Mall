@@ -30,7 +30,7 @@ public class IOrderServiceTest extends MallApplicationTests {
 
     private Integer shippingId = 4;
 
-    private Integer productId = 29;
+    private Integer productId = 26;
 
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -45,7 +45,7 @@ public class IOrderServiceTest extends MallApplicationTests {
 
     @Test
     public void createTest() {
-        ResponseVo<OrderVo> responseVo = orderService.create(uid, shippingId);
+        ResponseVo<OrderVo> responseVo = create();
         log.info("result={}", gson.toJson(responseVo));
         Assert.assertEquals(ResponseEnum.SUCCESS.getCode(), responseVo.getStatus());
     }
